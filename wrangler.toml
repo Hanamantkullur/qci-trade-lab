@@ -1,0 +1,21 @@
+name = "qci-trade-lab"
+main = "src/index.js"
+compatibility_date = "2026-05-01"
+
+# npx wrangler d1 create qci-trade-lab
+[[d1_databases]]
+binding = "DB"
+database_name = "qci-trade-lab"
+database_id = "d4a26ee8-cf86-4ec1-a1a2-132909cb53c7"
+
+# npx wrangler r2 bucket create qci-trade-lab-data
+[[r2_buckets]]
+binding = "DATA"
+bucket_name = "qci-trade-lab-data"
+
+# npx wrangler secret put ADMIN_KEY
+
+# The Lightweight Charts build is served from here rather than a CDN, so a
+# student on a weak connection never gets a page with no chart on it.
+[assets]
+directory = "./public"
