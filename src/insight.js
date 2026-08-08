@@ -61,8 +61,8 @@ function counterTrend(trades) {
   return {
     kind: 'counter_trend',
     severity: share >= 50 ? SEVERITY.FIX : SEVERITY.WATCH,
-    title: 'ಪ್ರವೃತ್ತಿಗೆ ವಿರುದ್ಧವಾಗಿ ಟ್ರೇಡ್',
-    detail: `ನಿಮ್ಮ ${withBias.length} ಟ್ರೇಡ್‌ಗಳಲ್ಲಿ ${against.length} ಚಾರ್ಟ್‌ನ ದಿಕ್ಕಿಗೆ ವಿರುದ್ಧವಾಗಿದ್ದವು (${share}%), ಅವುಗಳಲ್ಲಿ ${lost} ನಷ್ಟದಲ್ಲಿ ಮುಗಿದವು. ಪ್ರವೃತ್ತಿಯನ್ನು ಮೊದಲು ಗುರುತಿಸಿ, ಆಮೇಲೆ ಪ್ರವೇಶ ಹುಡುಕಿ.`,
+    title: 'Trend ಗೆ ವಿರುದ್ಧವಾಗಿ Trade',
+    detail: `ನಿಮ್ಮ ${withBias.length} trades ನಲ್ಲಿ ${against.length} chart ನ direction ಗೆ ವಿರುದ್ಧ ಇದ್ದವು (${share}%), ಅದರಲ್ಲಿ ${lost} loss ನಲ್ಲಿ ಮುಗಿದವು. ಮೊದಲು trend ಗುರುತಿಸಿ, ಆಮೇಲೆ entry ಹುಡುಕಿ.`,
   };
 }
 
@@ -77,8 +77,8 @@ function tightStops(trades) {
   return {
     kind: 'tight_stops',
     severity: mid < 0.6 ? SEVERITY.FIX : SEVERITY.WATCH,
-    title: 'ಸ್ಟಾಪ್ ತುಂಬಾ ಬಿಗಿಯಾಗಿದೆ',
-    detail: `ನಿಮ್ಮ ಸ್ಟಾಪ್ ಸರಾಸರಿ ${mid.toFixed(2)} ATR ದೂರ ಇದೆ — ಮಾರುಕಟ್ಟೆಯ ಸಾಮಾನ್ಯ ಏರಿಳಿತಕ್ಕಿಂತ ಕಡಿಮೆ. ${measurable.length} ಟ್ರೇಡ್‌ಗಳಲ್ಲಿ ${stopped} ಸ್ಟಾಪ್ ಹಿಟ್ ಆದವು. ಸ್ಟಾಪ್ ಅನ್ನು ರಚನೆಯ ಆಚೆ ಇಡಿ, ಬೆಲೆಯ ಪಕ್ಕದಲ್ಲಿ ಅಲ್ಲ.`,
+    title: 'Stop Loss ತುಂಬಾ ಬಿಗಿ ಇದೆ',
+    detail: `ನಿಮ್ಮ Stop Loss average ${mid.toFixed(2)} ATR ದೂರ ಇದೆ — market ನ normal movement ಗಿಂತ ಕಡಿಮೆ. ${measurable.length} trades ನಲ್ಲಿ ${stopped} SL hit ಆದವು. Stop ಅನ್ನು structure ನ ಆಚೆ ಇಡಿ, price ನ ಪಕ್ಕದಲ್ಲಿ ಅಲ್ಲ.`,
   };
 }
 
@@ -93,8 +93,8 @@ function thinPlans(trades) {
   return {
     kind: 'thin_plans',
     severity: share >= 55 ? SEVERITY.FIX : SEVERITY.WATCH,
-    title: 'ಗುರಿ ತುಂಬಾ ಹತ್ತಿರ',
-    detail: `${trades.length} ರಲ್ಲಿ ${thin.length} ಟ್ರೇಡ್‌ಗಳ ಯೋಜಿತ ಅನುಪಾತ 1:1.5 ಗಿಂತ ಕಡಿಮೆ (${share}%). ಇಂಥ ಅನುಪಾತದಲ್ಲಿ ಲಾಭ ಉಳಿಯಬೇಕಾದರೆ ಬಹುತೇಕ ಪ್ರತಿ ಟ್ರೇಡ್ ಗೆಲ್ಲಬೇಕು — ಅದು ಯಾರಿಗೂ ಸಾಧ್ಯವಿಲ್ಲ.`,
+    title: 'Target ತುಂಬಾ ಹತ್ತಿರ',
+    detail: `${trades.length} ರಲ್ಲಿ ${thin.length} trades ನ planned R:R 1:1.5 ಗಿಂತ ಕಡಿಮೆ (${share}%). ಇಂಥ ratio ನಲ್ಲಿ profit ಉಳಿಬೇಕಾದ್ರೆ ಬಹುತೇಕ ಪ್ರತಿ trade ಗೆಲ್ಲಬೇಕು — ಅದು ಯಾರಿಗೂ ಸಾಧ್ಯ ಇಲ್ಲ.`,
   };
 }
 
@@ -110,8 +110,8 @@ function cutsWinners(trades) {
   return {
     kind: 'cuts_winners',
     severity: SEVERITY.WATCH,
-    title: 'ಲಾಭದ ಟ್ರೇಡ್ ಬೇಗ ಮುಚ್ಚುತ್ತೀರಿ',
-    detail: `ನೀವು ಕೈಯಿಂದ ಮುಚ್ಚಿದ ${closed.length} ಟ್ರೇಡ್‌ಗಳಲ್ಲಿ ${early.length} ಗುರಿಯ ಅರ್ಧಕ್ಕಿಂತ ಮೊದಲೇ ಮುಚ್ಚಿದವು. ಸಣ್ಣ ಲಾಭ ಸುರಕ್ಷಿತ ಅನಿಸುತ್ತೆ, ಆದರೆ ದೊಡ್ಡ ಗೆಲುವುಗಳೇ ನಷ್ಟಗಳನ್ನು ತುಂಬುವುದು.`,
+    title: 'Winning trade ಬೇಗ close ಮಾಡ್ತೀರಿ',
+    detail: `ನೀವು ಕೈಯಿಂದ close ಮಾಡಿದ ${closed.length} trades ನಲ್ಲಿ ${early.length} target ನ ಅರ್ಧಕ್ಕಿಂತ ಮೊದಲೇ close ಆದವು. ಸಣ್ಣ profit safe ಅನಿಸುತ್ತೆ, ಆದ್ರೆ ದೊಡ್ಡ winners ಗಳೇ losses ಅನ್ನ ತುಂಬೋದು.`,
   };
 }
 
@@ -124,8 +124,8 @@ function overtrades(sessions, trades) {
   return {
     kind: 'overtrades',
     severity: SEVERITY.WATCH,
-    title: 'ಪ್ರತಿ ಡ್ರಿಲ್‌ನಲ್ಲೂ ಎಲ್ಲಾ ಆರ್ಡರ್ ಬಳಸುತ್ತೀರಿ',
-    detail: `${sessions.length} ಡ್ರಿಲ್‌ಗಳಲ್ಲಿ ${full.length} ರಲ್ಲಿ ನೀವು ಮಿತಿಯಷ್ಟೂ ಆರ್ಡರ್ ಇಟ್ಟಿದ್ದೀರಿ. ಮಿತಿ ಎಂದರೆ ಗುರಿ ಅಲ್ಲ. ಒಳ್ಳೆಯ ಅವಕಾಶ ಇಲ್ಲದಿದ್ದಾಗ ಸುಮ್ಮನಿರುವುದೂ ಒಂದು ನಿರ್ಧಾರ.`,
+    title: 'ಪ್ರತಿ Drill ನಲ್ಲೂ ಎಲ್ಲಾ Orders ಬಳಸ್ತೀರಿ',
+    detail: `${sessions.length} drills ನಲ್ಲಿ ${full.length} ರಲ್ಲಿ ನೀವು limit ನಷ್ಟೂ orders ಇಟ್ಟಿದ್ದೀರಿ. Limit ಅಂದ್ರೆ target ಅಲ್ಲ. ಒಳ್ಳೆ setup ಇಲ್ಲದಿದ್ದಾಗ ಸುಮ್ಮನಿರೋದೂ ಒಂದು decision.`,
   };
 }
 
@@ -137,8 +137,8 @@ function noJournal(trades) {
   return {
     kind: 'no_journal',
     severity: SEVERITY.FIX,
-    title: 'ಕಾರಣ ಬರೆಯುತ್ತಿಲ್ಲ',
-    detail: `${trades.length} ಟ್ರೇಡ್‌ಗಳಲ್ಲಿ ${written.length} ಕ್ಕೆ ಮಾತ್ರ ಕಾರಣ ಬರೆದಿದ್ದೀರಿ (${share}%). ಕಾರಣ ಬರೆಯದ ಟ್ರೇಡ್‌ನಿಂದ ಕಲಿಯಲು ಏನೂ ಉಳಿಯುವುದಿಲ್ಲ — ಗೆದ್ದರೂ ಸೋತರೂ.`,
+    title: 'Reason ಬರೀತಿಲ್ಲ',
+    detail: `${trades.length} trades ನಲ್ಲಿ ${written.length} ಕ್ಕೆ ಮಾತ್ರ reason ಬರೆದಿದ್ದೀರಿ (${share}%). Reason ಬರೆಯದ trade ನಿಂದ ಕಲಿಯೋಕೆ ಏನೂ ಉಳಿಯಲ್ಲ — ಗೆದ್ರೂ ಸೋತ್ರೂ.`,
   };
 }
 
@@ -155,8 +155,8 @@ function goodPatience(trades) {
   return {
     kind: 'trend_aligned',
     severity: SEVERITY.STRENGTH,
-    title: 'ಪ್ರವೃತ್ತಿಯ ಜೊತೆ ಹೋಗುತ್ತೀರಿ',
-    detail: `${withBias.length} ರಲ್ಲಿ ${aligned.length} ಟ್ರೇಡ್ ಚಾರ್ಟ್‌ನ ದಿಕ್ಕಿನಲ್ಲೇ ಇದ್ದವು (${share}%). ಇದು ಬಹಳ ಜನಕ್ಕೆ ವರ್ಷಗಟ್ಟಲೆ ಸಿಗದ ಶಿಸ್ತು.`,
+    title: 'Trend ಜೊತೆ ಹೋಗ್ತೀರಿ',
+    detail: `${withBias.length} ರಲ್ಲಿ ${aligned.length} trades chart ನ direction ನಲ್ಲೇ ಇದ್ದವು (${share}%). ಇದು ಬಹಳ ಜನಕ್ಕೆ ವರ್ಷಗಟ್ಟಲೆ ಸಿಗದ discipline.`,
   };
 }
 
@@ -171,8 +171,8 @@ function goodPlanning(trades) {
   return {
     kind: 'strong_rr',
     severity: SEVERITY.STRENGTH,
-    title: 'ಅನುಪಾತ ಚೆನ್ನಾಗಿ ಯೋಜಿಸುತ್ತೀರಿ',
-    detail: `${trades.length} ರಲ್ಲಿ ${good.length} ಟ್ರೇಡ್ 1:2 ಕ್ಕಿಂತ ಒಳ್ಳೆಯ ಅನುಪಾತದಲ್ಲಿ ಇದ್ದವು (${share}%). ಗೆಲುವಿನ ಪ್ರಮಾಣ ಅರ್ಧಕ್ಕಿಂತ ಕಡಿಮೆ ಇದ್ದರೂ ಇಂಥ ಯೋಜನೆ ಲಾಭ ಕೊಡುತ್ತೆ.`,
+    title: 'R:R ಚೆನ್ನಾಗಿ plan ಮಾಡ್ತೀರಿ',
+    detail: `${trades.length} ರಲ್ಲಿ ${good.length} trades 1:2 ಗಿಂತ ಒಳ್ಳೆ ratio ನಲ್ಲಿ ಇದ್ದವು (${share}%). Win rate ಅರ್ಧಕ್ಕಿಂತ ಕಡಿಮೆ ಇದ್ರೂ ಇಂಥ planning profit ಕೊಡುತ್ತೆ.`,
   };
 }
 
@@ -186,8 +186,8 @@ function goodPatienceNoTrade(sessions) {
   return {
     kind: 'sits_out',
     severity: SEVERITY.STRENGTH,
-    title: 'ಸ್ಪಷ್ಟತೆ ಇಲ್ಲದಾಗ ಸುಮ್ಮನಿರುತ್ತೀರಿ',
-    detail: `${sessions.length} ಡ್ರಿಲ್‌ಗಳಲ್ಲಿ ${quiet.length} ರಲ್ಲಿ ನೀವು ಒಂದೂ ಆರ್ಡರ್ ಇಡಲಿಲ್ಲ. ಬಹಳ ಟ್ರೇಡರ್‌ಗಳಿಗೆ ಇದೇ ಅತಿ ಕಷ್ಟದ ಕೌಶಲ್ಯ.`,
+    title: 'Clarity ಇಲ್ಲದಾಗ ಸುಮ್ಮನಿರ್ತೀರಿ',
+    detail: `${sessions.length} drills ನಲ್ಲಿ ${quiet.length} ರಲ್ಲಿ ನೀವು ಒಂದೂ order ಇಡಲಿಲ್ಲ. ಬಹಳ traders ಗೆ ಇದೇ ಅತಿ ಕಷ್ಟದ skill.`,
   };
 }
 

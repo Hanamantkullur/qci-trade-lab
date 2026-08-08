@@ -192,11 +192,11 @@ export function layout(title, body, { wide = false, nav = true, script = '' } = 
 <style>${CSS}</style>
 </head><body><div class="wrap${wide ? ' wrap-wide' : ''}">${body}
 <div class="foot">
-  <div>ಇದು ಶೈಕ್ಷಣಿಕ ಅಭ್ಯಾಸ ಸಾಧನ. ಹಿಂದಿನ ಮಾರುಕಟ್ಟೆ ದತ್ತಾಂಶದ ಮೇಲೆ ಅಭ್ಯಾಸ ಮಾಡುವುದು ಮುಂದಿನ ಫಲಿತಾಂಶದ ಸೂಚನೆ ಅಲ್ಲ.
-  ಇಲ್ಲಿ ಯಾವುದೇ buy/sell ಸಲಹೆ ಅಥವಾ ಲಾಭದ ಭರವಸೆ ನೀಡುವುದಿಲ್ಲ.</div>
-  ${nav ? `<div class="nav"><a href="/">ಡ್ರಿಲ್‌ಗಳು</a><a href="/leaderboard">ಅಂಕಪಟ್ಟಿ</a><a href="/me">ನನ್ನ ದಾಖಲೆ</a></div>` : ''}
+  <div>ಇದು educational practice tool ಮಾತ್ರ. ಹಿಂದಿನ market data ಮೇಲೆ practice ಮಾಡೋದು ಮುಂದಿನ result ನ ಸೂಚನೆ ಅಲ್ಲ.
+  ಇಲ್ಲಿ ಯಾವುದೇ buy/sell tip ಅಥವಾ profit guarantee ಇಲ್ಲ.</div>
+  ${nav ? `<div class="nav"><a href="/">Drills</a><a href="/leaderboard">Leaderboard</a><a href="/me">ನನ್ನ Record</a></div>` : ''}
   <div style="margin-top:12px">Quest Capital Institute · 7019991009 · www.questcapital.in</div>
-  <div style="margin-top:8px">ಚಾರ್ಟ್‌ಗಳು Lightweight Charts™ ಮೂಲಕ — ರಚಿಸಿದವರು
+  <div style="margin-top:8px">Charts by Lightweight Charts™ —
     <a href="https://www.tradingview.com/" rel="noopener" target="_blank">TradingView, Inc.</a></div>
 </div></div>${script}</body></html>`;
 }
@@ -208,11 +208,11 @@ const head = (h1, sub, eyebrow = 'Trade Lab') => `<div class="masthead">
 export const tick = (l) => `<div class="tick"><span>${esc(l)}</span></div>`;
 
 const LEVEL_KN = {
-  1: 'ಹಂತ 1 — ಪ್ರವೃತ್ತಿ ಗುರುತಿಸುವಿಕೆ',
-  2: 'ಹಂತ 2 — ಪ್ರವೇಶ ಮತ್ತು ಸ್ಟಾಪ್',
-  3: 'ಹಂತ 3 — ಅಪಾಯ ನಿರ್ವಹಣೆ',
-  4: 'ಹಂತ 4 — ಸೆಷನ್ ಮತ್ತು ಸುದ್ದಿ',
-  5: 'ಹಂತ 5 — ಮುಕ್ತ ಅಭ್ಯಾಸ',
+  1: 'Level 1 · Trend ಗುರುತಿಸೋದು',
+  2: 'Level 2 · Entry ಮತ್ತು Stop Loss',
+  3: 'Level 3 · Risk Management',
+  4: 'Level 4 · Session ಮತ್ತು News',
+  5: 'Level 5 · Free Practice',
 };
 
 /* ------------------------------------------------------------------ home */
@@ -221,18 +221,18 @@ export function homePage(byLevel, done, unlocked = {}) {
   const levels = Object.keys(byLevel).sort((a, b) => a - b);
 
   const intro = `<div class="lede">
-    <p>ಪ್ರತಿ ಡ್ರಿಲ್‌ನಲ್ಲಿ ನಿಜವಾದ ಚಾರ್ಟ್‌ನ ಒಂದು ತುಂಡು ಸಿಗುತ್ತೆ. ಬಲಗಡೆ ಮುಚ್ಚಿರುತ್ತೆ.
-    ನೀವು ದಿಕ್ಕು ನಿರ್ಧರಿಸಿ, Entry–SL–TP ಇಡಿ, ಕಾರಣ ಬರೆಯಿರಿ. ಆಮೇಲೆ ಕ್ಯಾಂಡಲ್ ಒಂದೊಂದಾಗಿ ತೆರೆಯುತ್ತೆ.</p>
-    <p><b>ಮುಂದೇನಾಗುತ್ತೆ ಅನ್ನೋದು ನಿಮಗೂ ಗೊತ್ತಿಲ್ಲ, ಬ್ರೌಸರ್‌ಗೂ ಗೊತ್ತಿಲ್ಲ.</b>
-    ಕ್ಯಾಂಡಲ್‌ಗಳು ಸರ್ವರ್‌ನಲ್ಲಿ ಇರುತ್ತವೆ, ಒಂದೊಂದಾಗಿ ಮಾತ್ರ ಬರುತ್ತವೆ.</p>
+    <p>ಪ್ರತಿ drill ನಲ್ಲಿ ನಿಜವಾದ chart ನ ಒಂದು ತುಂಡು ಸಿಗುತ್ತೆ, ಬಲಗಡೆ ಮುಚ್ಚಿರುತ್ತೆ.
+    ನೀವು direction ನಿರ್ಧರಿಸಿ, Entry–SL–TP ಇಡಿ, reason ಬರೆಯಿರಿ. ಆಮೇಲೆ candle ಒಂದೊಂದಾಗಿ open ಆಗುತ್ತೆ.</p>
+    <p><b>ಮುಂದೇನಾಗುತ್ತೆ ಅನ್ನೋದು ನಿಮಗೂ ಗೊತ್ತಿಲ್ಲ, browser ಗೂ ಗೊತ್ತಿಲ್ಲ.</b>
+    Candles server ನಲ್ಲಿ ಇರುತ್ತವೆ, ಒಂದೊಂದಾಗಿ ಮಾತ್ರ ಬರುತ್ತವೆ.</p>
     <div class="steps">
-      <div class="step"><b>1</b><span>ಚಾರ್ಟ್ ಓದಿ</span></div>
-      <div class="step"><b>2</b><span>ಆರ್ಡರ್ ಇಡಿ</span></div>
-      <div class="step"><b>3</b><span>ಕ್ಯಾಂಡಲ್ ತೆರೆಯಿರಿ</span></div>
-      <div class="step"><b>4</b><span>ವರದಿ ಓದಿ</span></div>
+      <div class="step"><b>1</b><span>Chart ಓದಿ</span></div>
+      <div class="step"><b>2</b><span>Order ಇಡಿ</span></div>
+      <div class="step"><b>3</b><span>Candle ತೆರೆಯಿರಿ</span></div>
+      <div class="step"><b>4</b><span>Report ಓದಿ</span></div>
     </div>
-    <p class="lede-r">ಎಲ್ಲಾ ಲೆಕ್ಕ <b>R</b> ನಲ್ಲಿ — ರೂಪಾಯಿಯಲ್ಲಿ ಅಲ್ಲ. ನಿಮ್ಮ ಸ್ಟಾಪ್ ಎಂದರೆ 1R.
-    ಅದೇ ಅಳತೆಗೋಲು. ಆಗ ಎಷ್ಟು ಲಾಟ್ ಅನ್ನೋ ಪ್ರಶ್ನೆ ಹೋಗಿ, ಎಷ್ಟು ಅಪಾಯ ಅನ್ನೋ ಪ್ರಶ್ನೆ ಬರುತ್ತೆ.</p>
+    <p class="lede-r">ಎಲ್ಲಾ calculation <b>R</b> ನಲ್ಲಿ — rupees ನಲ್ಲಿ ಅಲ್ಲ. ನಿಮ್ಮ Stop Loss ಅಂದ್ರೆ 1R,
+    ಅದೇ measuring scale. ಆಗ “ಎಷ್ಟು lot?” ಅನ್ನೋ ಪ್ರಶ್ನೆ ಹೋಗಿ “ಎಷ್ಟು risk?” ಅನ್ನೋ ಪ್ರಶ್ನೆ ಬರುತ್ತೆ.</p>
   </div>`;
 
   const body = levels.length
@@ -255,21 +255,21 @@ export function homePage(byLevel, done, unlocked = {}) {
             })
             .join('');
           return (
-            tick((LEVEL_KN[lv] || `ಹಂತ ${lv}`) + (open ? '' : ' · ಬೀಗ')) +
+            tick((LEVEL_KN[lv] || `Level ${lv}`) + (open ? '' : ' · Locked')) +
             (open
               ? ''
-              : `<div class="hint" style="margin:-4px 0 12px">ಹಿಂದಿನ ಹಂತದ ಎರಡು ಡ್ರಿಲ್ 60 ಅಂಕದ ಮೇಲೆ ಮುಗಿಸಿದರೆ ಇದು ತೆರೆಯುತ್ತೆ.</div>`) +
+              : `<div class="hint" style="margin:-4px 0 12px">ಹಿಂದಿನ level ನ ಎರಡು drill 60 score ಮೇಲೆ ಮುಗಿಸಿದ್ರೆ ಇದು unlock ಆಗುತ್ತೆ.</div>`) +
             cards
           );
         })
         .join('')
-    : `<div class="notice">ಇನ್ನೂ ಯಾವುದೇ ಡ್ರಿಲ್ ಪ್ರಕಟವಾಗಿಲ್ಲ.</div>`;
+    : `<div class="notice">ಇನ್ನೂ ಯಾವುದೇ drill publish ಆಗಿಲ್ಲ.</div>`;
 
   return layout(
     'QCI Trade Lab',
     head(
-      'ನಿಜವಾದ ಚಾರ್ಟ್. ಒಂದೊಂದೇ ಕ್ಯಾಂಡಲ್.',
-      'ಹಿಂದಿನ ಮಾರುಕಟ್ಟೆಯನ್ನು ಮತ್ತೆ ಓಡಿಸಿ ಅಭ್ಯಾಸ ಮಾಡಿ — ಸಂಪೂರ್ಣ ಕನ್ನಡದಲ್ಲಿ.'
+      'ನಿಜವಾದ Chart. ಒಂದೊಂದೇ Candle.',
+      'ಹಿಂದಿನ market ಅನ್ನ ಮತ್ತೆ replay ಮಾಡಿ practice ಮಾಡಿ — ಸಂಪೂರ್ಣ ಕನ್ನಡದಲ್ಲಿ.'
     ) +
       intro +
       body
@@ -288,8 +288,8 @@ export function replayPage(drill, student) {
         <div class="chartbox">
           <div id="chart"></div>
           <div class="chartbar">
-            <button type="button" id="bNext">ಮುಂದಿನ ಕ್ಯಾಂಡಲ್ →</button>
-            <button type="button" id="bPlay">▶ ಆಟೋ</button>
+            <button type="button" id="bNext">ಮುಂದಿನ Candle →</button>
+            <button type="button" id="bPlay">▶ Auto</button>
             <span class="grow"></span>
             <span class="meta" id="mLeft"></span>
           </div>
@@ -299,7 +299,7 @@ export function replayPage(drill, student) {
       </div>
 
       <div class="panel">
-        <h4>ಆರ್ಡರ್</h4>
+        <h4>Order</h4>
         <div class="sides">
           <label class="side" data-s="BUY"><input type="radio" name="side" value="BUY" checked>BUY</label>
           <label class="side" data-s="SELL"><input type="radio" name="side" value="SELL">SELL</label>
@@ -310,7 +310,7 @@ export function replayPage(drill, student) {
           <div class="field"><label for="tp">TP</label><input type="number" step="any" id="tp" inputmode="decimal"></div>
         </div>
         <div class="ruler">
-          <div class="ruler-head"><span class="lab">R ಅಳತೆ</span><span class="now" id="rNow">—</span></div>
+          <div class="ruler-head"><span class="lab">R Scale</span><span class="now" id="rNow">—</span></div>
           <div class="track" id="track">
             <div class="zone zone-risk" id="zRisk" hidden></div>
             <div class="zone zone-reward" id="zRew" hidden></div>
@@ -319,15 +319,15 @@ export function replayPage(drill, student) {
             <div class="stake tp" id="kTp" hidden><b id="kTpL"></b></div>
             <div class="cursor" id="cur" hidden></div>
           </div>
-          <div class="ruler-foot" id="rFoot">ನಿಮ್ಮ ಸ್ಟಾಪ್ ಎಂದರೆ 1R. ಎಲ್ಲವನ್ನೂ ಅದರ ಪಟ್ಟುಗಳಲ್ಲಿ ಅಳೆಯಿರಿ.</div>
+          <div class="ruler-foot" id="rFoot">ನಿಮ್ಮ Stop Loss ಅಂದ್ರೆ 1R. ಎಲ್ಲಾನೂ ಅದರ ಪಟ್ಟುಗಳಲ್ಲಿ ಅಳೆಯಿರಿ.</div>
         </div>
-        <div class="rr-line"><span>ಉಳಿದ ಆರ್ಡರ್</span><span id="left">${drill.max_trades}</span></div>
-        <div class="field" style="margin-top:8px"><label for="note">ಈ ಟ್ರೇಡ್ ಯಾಕೆ?</label>
-          <textarea id="note" maxlength="300" placeholder="ಕಾರಣ ಬರೆದರೆ ಮಾತ್ರ journal ಅಂಕ ಸಿಗುತ್ತೆ"></textarea></div>
-        <button class="btn btn-sm" type="button" id="bPlace">ಆರ್ಡರ್ ಇಡಿ</button>
-        <button class="btn btn-sm btn-ghost" style="margin-top:8px" type="button" id="bClose" disabled>ಈಗಿನ ಟ್ರೇಡ್ ಮುಚ್ಚಿ</button>
-        <button class="btn btn-sm btn-ghost" style="margin-top:8px" type="button" id="bFinish">ಸೆಷನ್ ಮುಗಿಸಿ</button>
-        <div class="hint">ಒಂದು ಸಮಯದಲ್ಲಿ ಒಂದೇ ಟ್ರೇಡ್. ಚಾರ್ಟ್ ಮೇಲೆ ಟ್ಯಾಪ್ ಮಾಡಿದರೆ ಆ ಬೆಲೆ ಆಯ್ಕೆಯಾದ ಖಾನೆಗೆ ಬರುತ್ತೆ.</div>
+        <div class="rr-line"><span>ಉಳಿದ Orders</span><span id="left">${drill.max_trades}</span></div>
+        <div class="field" style="margin-top:8px"><label for="note">ಈ Trade ಯಾಕೆ?</label>
+          <textarea id="note" maxlength="300" placeholder="Reason ಬರೆದ್ರೆ ಮಾತ್ರ Journal score ಸಿಗುತ್ತೆ"></textarea></div>
+        <button class="btn btn-sm" type="button" id="bPlace">Order ಇಡಿ</button>
+        <button class="btn btn-sm btn-ghost" style="margin-top:8px" type="button" id="bClose" disabled>ಈಗಿನ Trade Close ಮಾಡಿ</button>
+        <button class="btn btn-sm btn-ghost" style="margin-top:8px" type="button" id="bFinish">Session ಮುಗಿಸಿ</button>
+        <div class="hint">ಒಂದು ಸಮಯದಲ್ಲಿ ಒಂದೇ trade. Chart ಮೇಲೆ tap ಮಾಡಿದ್ರೆ ಆ price ಕೊನೆಯ ಬಾರಿ touch ಮಾಡಿದ box ಗೆ ಬರುತ್ತೆ.</div>
       </div>
     </div>`,
     {
@@ -350,13 +350,13 @@ window.DRILL = ${JSON.stringify({
 /* --------------------------------------------------------------- results */
 
 const STATUS_KN = {
-  TP: 'ಟಾರ್ಗೆಟ್ ಹಿಟ್',
-  SL: 'ಸ್ಟಾಪ್ ಹಿಟ್',
-  CLOSED: 'ಕೈಯಿಂದ ಮುಚ್ಚಿದ್ದು',
-  EXPIRED: 'ಸೆಷನ್ ಕೊನೆಗೆ ಮುಚ್ಚಿತು',
-  CANCELLED: 'ಫಿಲ್ ಆಗಲಿಲ್ಲ',
-  OPEN: 'ಓಪನ್',
-  PENDING: 'ಕಾಯುತ್ತಿದೆ',
+  TP: 'Target hit',
+  SL: 'Stop hit',
+  CLOSED: 'ಕೈಯಿಂದ close ಮಾಡಿದ್ದು',
+  EXPIRED: 'Session ಕೊನೆಗೆ close ಆಯ್ತು',
+  CANCELLED: 'Fill ಆಗಲಿಲ್ಲ',
+  OPEN: 'Open',
+  PENDING: 'Pending',
 };
 
 
@@ -390,7 +390,7 @@ function rCurve(trades) {
     .join('');
 
   return `<div class="curve"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img"
-    aria-label="ಸೆಷನ್‌ನ ಸಂಚಿತ R ರೇಖೆ">
+    aria-label="Session ನ cumulative R curve">
     <line x1="${pad}" y1="${y(0).toFixed(1)}" x2="${W - pad}" y2="${y(0).toFixed(1)}"
       stroke="var(--line)" stroke-width="1"/>
     <path d="${path}" fill="none" stroke="${stroke}" stroke-width="2" stroke-linejoin="round"/>
@@ -421,38 +421,38 @@ export function resultPage(drill, session, stats, score, trades, rank) {
 
   const verdict =
     score.total >= 80
-      ? ['ಶಿಸ್ತುಬದ್ಧ ಸೆಷನ್.', 'good']
+      ? ['ಶಿಸ್ತುಬದ್ಧ session. ಇದೇ ರೀತಿ continue ಮಾಡಿ.', 'good']
       : score.total >= 55
-      ? ['ಸರಿಯಾದ ದಿಕ್ಕಿನಲ್ಲಿದೆ. ಯೋಜನೆ ಇನ್ನೂ ಬಿಗಿಯಾಗಬೇಕು.', '']
-      : ['ಫಲಿತಾಂಶಕ್ಕಿಂತ ಪ್ರಕ್ರಿಯೆ ಮೊದಲು ಸರಿಪಡಿಸಿ.', 'bad'];
+      ? ['ಸರಿಯಾದ direction ನಲ್ಲಿದೆ. Planning ಇನ್ನೂ ಬಿಗಿ ಆಗಬೇಕು.', '']
+      : ['Result ಗಿಂತ ಮೊದಲು process ಸರಿಪಡಿಸಿ.', 'bad'];
 
   return layout(
-    drill.title + ' — ಫಲಿತಾಂಶ',
-    head(drill.title, 'ಸೆಷನ್ ಮುಗಿದಿದೆ', 'Session Report') +
+    drill.title + ' — Report',
+    head(drill.title, 'Session ಮುಗಿದಿದೆ', 'Report') +
       `<div class="notice ${verdict[1]}">${esc(verdict[0])}</div>` +
-      tick('ಅಂಕ') +
+      tick('Score') +
       `<div class="stats">
-        ${stat('ಒಟ್ಟು', score.total + ' / 100', 'warn')}
-        ${stat('ಫಲಿತಾಂಶ', score.result + ' / 40')}
-        ${stat('ಯೋಜನೆ', score.planning + ' / 25')}
-        ${stat('ಅಪಾಯ', score.risk + ' / 20')}
-        ${stat('ಜರ್ನಲ್', score.journal + ' / 15')}
+        ${stat('Total', score.total + ' / 100', 'warn')}
+        ${stat('Result', score.result + ' / 40')}
+        ${stat('Planning', score.planning + ' / 25')}
+        ${stat('Risk', score.risk + ' / 20')}
+        ${stat('Journal', score.journal + ' / 15')}
       </div>
-      <div class="hint">ಫಲಿತಾಂಶ 100 ರಲ್ಲಿ 40 ಮಾತ್ರ. ಚೆನ್ನಾಗಿ ಯೋಜಿಸಿ ಸೋತ ಟ್ರೇಡ್, ಯೋಜನೆ ಇಲ್ಲದೆ ಗೆದ್ದ ಟ್ರೇಡ್‌ಗಿಂತ ಹೆಚ್ಚು ಅಂಕ ಪಡೆಯುತ್ತೆ.</div>` +
-      (trades.length ? tick('R ರೇಖೆ') + rCurve(trades) : '') +
-      tick('ಅಂಕಿಅಂಶ') +
+      <div class="hint">Result 100 ರಲ್ಲಿ 40 ಮಾತ್ರ. ಚೆನ್ನಾಗಿ plan ಮಾಡಿ ಸೋತ trade, plan ಇಲ್ಲದೆ ಗೆದ್ದ trade ಗಿಂತ ಹೆಚ್ಚು score ಪಡೀತದೆ.</div>` +
+      (trades.length ? tick('R Curve') + rCurve(trades) : '') +
+      tick('Statistics') +
       `<div class="stats">
-        ${stat('ಒಟ್ಟು R', signedR(stats.totalR), cls(stats.totalR))}
-        ${stat('ಟ್ರೇಡ್', stats.filled)}
-        ${stat('ಗೆಲುವು %', stats.winRate + '%')}
-        ${stat('ನಿರೀಕ್ಷಿತ R', signedR(stats.expectancy), cls(stats.expectancy))}
-        ${stat('ಗರಿಷ್ಠ ಇಳಿತ', num(stats.maxDrawdownR, 2) + 'R', stats.maxDrawdownR > 0 ? 'neg' : '')}
-        ${stat('ಸರಾಸರಿ ಯೋಜಿತ R:R', '1:' + num(stats.avgPlannedRR, 2))}
+        ${stat('Total R', signedR(stats.totalR), cls(stats.totalR))}
+        ${stat('Trades', stats.filled)}
+        ${stat('Win %', stats.winRate + '%')}
+        ${stat('Expectancy', signedR(stats.expectancy), cls(stats.expectancy))}
+        ${stat('Max Drawdown', num(stats.maxDrawdownR, 2) + 'R', stats.maxDrawdownR > 0 ? 'neg' : '')}
+        ${stat('Avg planned R:R', '1:' + num(stats.avgPlannedRR, 2))}
       </div>` +
-      (rank ? `<div class="hint" style="margin-top:12px">ಈ ಡ್ರಿಲ್‌ನಲ್ಲಿ ನಿಮ್ಮ ಸ್ಥಾನ: ${rank.pos} / ${rank.total}</div>` : '') +
-      tick('ನಿಮ್ಮ ಟ್ರೇಡ್‌ಗಳು') +
-      (tradeRows || `<div class="hint">ಈ ಸೆಷನ್‌ನಲ್ಲಿ ಒಂದೂ ಆರ್ಡರ್ ಇಡಲಿಲ್ಲ.</div>`) +
-      `<div style="margin-top:24px"><a class="btn btn-ghost" href="/">ಬೇರೆ ಡ್ರಿಲ್ ಮಾಡಿ</a></div>`
+      (rank ? `<div class="hint" style="margin-top:12px">ಈ drill ನಲ್ಲಿ ನಿಮ್ಮ rank: ${rank.pos} / ${rank.total}</div>` : '') +
+      tick('ನಿಮ್ಮ Trades') +
+      (tradeRows || `<div class="hint">ಈ session ನಲ್ಲಿ ಒಂದೂ order ಇಡಲಿಲ್ಲ. ಕೆಲವೊಮ್ಮೆ ಅದೇ ಸರಿಯಾದ decision.</div>`) +
+      `<div style="margin-top:24px"><a class="btn btn-ghost" href="/">ಬೇರೆ Drill ಮಾಡಿ</a></div>`
   );
 }
 
@@ -463,24 +463,24 @@ export function startPage(drill, error) {
     drill.title,
     head(drill.title, drill.objective || '', `Level ${drill.level}`) +
       `<div class="card">
-        <div class="obj">ಈ ಡ್ರಿಲ್‌ನಲ್ಲಿ ${drill.visible_bars} ಕ್ಯಾಂಡಲ್ ಮೊದಲೇ ಕಾಣಿಸುತ್ತೆ, ನಂತರ ${drill.forward_bars} ಕ್ಯಾಂಡಲ್ ಒಂದೊಂದಾಗಿ ತೆರೆದುಕೊಳ್ಳುತ್ತೆ.
-        ಗರಿಷ್ಠ ${drill.max_trades} ಆರ್ಡರ್. ಒಂದು ಬಾರಿ ಶುರು ಮಾಡಿದ ಮೇಲೆ ಮತ್ತೆ ಶುರು ಮಾಡಲು ಆಗಲ್ಲ.</div>
+        <div class="obj">ಈ drill ನಲ್ಲಿ ಮೊದಲು ${drill.visible_bars} candles ಕಾಣಿಸುತ್ತೆ, ಆಮೇಲೆ ${drill.forward_bars} candles ಒಂದೊಂದಾಗಿ open ಆಗುತ್ತೆ.
+        ಗರಿಷ್ಠ ${drill.max_trades} orders. ಒಮ್ಮೆ start ಮಾಡಿದ ಮೇಲೆ restart ಮಾಡೋಕೆ ಆಗಲ್ಲ — ನಿಜವಾದ market ನಲ್ಲೂ ಆಗಲ್ಲ.</div>
       </div>` +
       (error ? `<div class="notice bad">${esc(error)}</div>` : '') +
       `<form method="post" action="/drill/${drill.id}/start">
-        <div class="field"><label for="name">ಹೆಸರು</label><input type="text" id="name" name="name" required maxlength="60"></div>
-        <div class="field"><label for="phone">WhatsApp ನಂಬರ್</label><input type="tel" id="phone" name="phone" required inputmode="numeric" placeholder="9876543210"></div>
-        <button class="btn" type="submit">ಡ್ರಿಲ್ ಶುರು ಮಾಡಿ</button>
+        <div class="field"><label for="name">ಹೆಸರು / Name</label><input type="text" id="name" name="name" required maxlength="60"></div>
+        <div class="field"><label for="phone">WhatsApp Number</label><input type="tel" id="phone" name="phone" required inputmode="numeric" placeholder="9876543210"></div>
+        <button class="btn" type="submit">Drill Start ಮಾಡಿ</button>
       </form>`
   );
 }
 
 export function leaderboardPage(rows) {
   return layout(
-    'ಅಂಕಪಟ್ಟಿ',
-    head('ಅಂಕಪಟ್ಟಿ', 'ಎಲ್ಲಾ ಡ್ರಿಲ್‌ಗಳ ಸರಾಸರಿ ಅಂಕದ ಆಧಾರದ ಮೇಲೆ.', 'Leaderboard') +
+    'Leaderboard',
+    head('Leaderboard', 'ಎಲ್ಲಾ drills ನ average score ಆಧಾರದ ಮೇಲೆ rank.', 'Rankings') +
       (rows.length
-        ? `<table class="board"><thead><tr><th></th><th>ಹೆಸರು</th><th style="text-align:right">ಡ್ರಿಲ್</th><th style="text-align:right">ಸರಾಸರಿ</th></tr></thead><tbody>
+        ? `<table class="board"><thead><tr><th></th><th>Name</th><th style="text-align:right">Drills</th><th style="text-align:right">Avg</th></tr></thead><tbody>
         ${rows
           .map(
             (r, i) => `<tr class="${i < 3 ? 'top' : ''}"><td class="rank">${i + 1}</td>
@@ -489,21 +489,21 @@ export function leaderboardPage(rows) {
           <td class="pts">${Math.round(r.avg)}</td></tr>`
           )
           .join('')}</tbody></table>`
-        : `<div class="hint">ಇನ್ನೂ ಯಾವುದೇ ಸೆಷನ್ ಮುಗಿದಿಲ್ಲ.</div>`) +
-      `<div class="hint" style="margin-top:14px">ಕನಿಷ್ಠ ಮೂರು ಡ್ರಿಲ್ ಮುಗಿಸಿದವರು ಮಾತ್ರ ಇಲ್ಲಿ ಕಾಣಿಸ್ತಾರೆ — ಒಂದೇ ಅದೃಷ್ಟದ ಸೆಷನ್ ಮೇಲಕ್ಕೆ ತರಬಾರದು ಅಂತ.</div>`
+        : `<div class="hint">ಇನ್ನೂ ಯಾವುದೇ session ಮುಗಿದಿಲ್ಲ.</div>`) +
+      `<div class="hint" style="margin-top:14px">ಕನಿಷ್ಠ ಮೂರು drill ಮುಗಿಸಿದವರು ಮಾತ್ರ ಇಲ್ಲಿ ಕಾಣಿಸ್ತಾರೆ — ಒಂದೇ lucky session ಮೇಲಕ್ಕೆ ತರಬಾರದು ಅಂತ.</div>`
   );
 }
 
-const SEV_KN = { fix: 'ಸರಿಪಡಿಸಿ', watch: 'ಗಮನಿಸಿ', strength: 'ಬಲ' };
+const SEV_KN = { fix: 'ಸರಿಪಡಿಸಿ / FIX', watch: 'ಗಮನಿಸಿ / WATCH', strength: 'ಬಲ / STRENGTH' };
 
 export function mePage({ phone, student, rows, agg, habits, error }) {
   const cls = (v) => (v > 0 ? 'pos' : v < 0 ? 'neg' : '');
   const stat = (k, v, c = '') => `<div class="stat"><div class="k">${esc(k)}</div><div class="v ${c}">${v}</div></div>`;
 
   let body = `<form method="get" action="/me">
-    <div class="field"><label for="p">WhatsApp ನಂಬರ್</label>
+    <div class="field"><label for="p">WhatsApp Number</label>
       <input type="tel" id="p" name="phone" value="${esc(phone || '')}" placeholder="9876543210" inputmode="numeric" required></div>
-    <button class="btn" type="submit">ನನ್ನ ದಾಖಲೆ ನೋಡಿ</button></form>`;
+    <button class="btn" type="submit">ನನ್ನ Record ನೋಡಿ</button></form>`;
 
   if (error) body += `<div class="notice bad">${esc(error)}</div>`;
 
@@ -511,15 +511,15 @@ export function mePage({ phone, student, rows, agg, habits, error }) {
     body +=
       tick(student.name) +
       `<div class="stats">
-        ${stat('ಡ್ರಿಲ್', agg.drills)}
-        ${stat('ಸರಾಸರಿ ಅಂಕ', Math.round(agg.avgScore), 'warn')}
-        ${stat('ಒಟ್ಟು R', signedR(agg.totalR), cls(agg.totalR))}
-        ${stat('ಟ್ರೇಡ್', agg.trades)}
-        ${stat('ಗೆಲುವು %', agg.winRate + '%')}
-        ${stat('ನಿರೀಕ್ಷಿತ R', signedR(agg.expectancy), cls(agg.expectancy))}
+        ${stat('Drills', agg.drills)}
+        ${stat('Avg Score', Math.round(agg.avgScore), 'warn')}
+        ${stat('Total R', signedR(agg.totalR), cls(agg.totalR))}
+        ${stat('Trades', agg.trades)}
+        ${stat('Win %', agg.winRate + '%')}
+        ${stat('Expectancy', signedR(agg.expectancy), cls(agg.expectancy))}
       </div>` +
       (habits
-        ? tick('ನಿಮ್ಮ ಅಭ್ಯಾಸಗಳು') +
+        ? tick('ನಿಮ್ಮ Habits') +
           (habits.ready
             ? habits.findings
                 .map(
@@ -529,12 +529,12 @@ export function mePage({ phone, student, rows, agg, habits, error }) {
                 <div class="finding-body">${esc(f.detail)}</div></div>`
                 )
                 .join('') +
-              `<div class="hint">ಇವು ${habits.trades} ಟ್ರೇಡ್‌ಗಳ ಮೇಲೆ ಆಧರಿಸಿವೆ. ಒಂದು ಟ್ರೇಡ್ ಬಗ್ಗೆ ಇಲ್ಲಿ ಏನೂ ಹೇಳುವುದಿಲ್ಲ — ಪುನರಾವರ್ತನೆ ಆಗುವ ಅಭ್ಯಾಸ ಮಾತ್ರ.</div>`
-            : `<div class="notice">ಇನ್ನೂ ${habits.needed} ಟ್ರೇಡ್ ಆದ ಮೇಲೆ ನಿಮ್ಮ ಅಭ್ಯಾಸಗಳನ್ನು ಇಲ್ಲಿ ತೋರಿಸ್ತೀವಿ. ಅಷ್ಟು ಇಲ್ಲದೆ ಹೇಳಿದ್ದು ಊಹೆ ಆಗುತ್ತೆ.</div>`)
+              `<div class="hint">ಇವು ${habits.trades} trades ಮೇಲೆ ಆಧರಿಸಿವೆ. ಒಂದು trade ಬಗ್ಗೆ ಇಲ್ಲಿ ಏನೂ ಹೇಳಲ್ಲ — repeat ಆಗೋ habit ಮಾತ್ರ.</div>`
+            : `<div class="notice">ಇನ್ನೂ ${habits.needed} trades ಆದ ಮೇಲೆ ನಿಮ್ಮ habits ಇಲ್ಲಿ ತೋರಿಸ್ತೀವಿ. ಅಷ್ಟು data ಇಲ್ಲದೆ ಹೇಳಿದ್ರೆ ಅದು ಬರೀ guess ಆಗುತ್ತೆ.</div>`)
         : '') +
-      tick('ಸೆಷನ್ ಇತಿಹಾಸ') +
+      tick('Session History') +
       (rows.length
-        ? `<table class="board"><thead><tr><th>ಡ್ರಿಲ್</th><th style="text-align:right">R</th><th style="text-align:right">ಅಂಕ</th></tr></thead><tbody>
+        ? `<table class="board"><thead><tr><th>Drill</th><th style="text-align:right">R</th><th style="text-align:right">Score</th></tr></thead><tbody>
         ${rows
           .map(
             (r) => `<tr><td><a href="/drill/${r.drill_id}/result">${esc(r.title)}</a></td>
@@ -542,13 +542,13 @@ export function mePage({ phone, student, rows, agg, habits, error }) {
           <td class="pts">${r.total_score}</td></tr>`
           )
           .join('')}</tbody></table>`
-        : `<div class="hint">ಇನ್ನೂ ಯಾವುದೇ ಸೆಷನ್ ಮುಗಿದಿಲ್ಲ.</div>`);
+        : `<div class="hint">ಇನ್ನೂ ಯಾವುದೇ session ಮುಗಿದಿಲ್ಲ.</div>`);
   }
 
-  return layout('ನನ್ನ ದಾಖಲೆ', head('ನನ್ನ ದಾಖಲೆ', 'ಎಲ್ಲಾ ಸೆಷನ್‌ಗಳ ಒಟ್ಟು ಅಂಕಿಅಂಶ.', 'Track Record') + body);
+  return layout('ನನ್ನ Record', head('ನನ್ನ Record', 'ಎಲ್ಲಾ sessions ನ ಒಟ್ಟು statistics.', 'Track Record') + body);
 }
 
-export function messagePage(title, message, { kind = '', link = '/', linkText = 'ಡ್ರಿಲ್‌ಗಳಿಗೆ' } = {}) {
+export function messagePage(title, message, { kind = '', link = '/', linkText = 'Drills ಗೆ' } = {}) {
   return layout(
     title,
     head(title, '') + `<div class="notice ${kind}">${esc(message)}</div>

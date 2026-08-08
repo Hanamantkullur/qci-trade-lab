@@ -198,13 +198,13 @@ export default {
       /* ---- replay API ---- */
       if (path.startsWith('/api/session/')) {
         const found = await loadSession(request, env);
-        if (!found) return json({ error: 'ಸೆಷನ್ ಸಿಗಲಿಲ್ಲ. ಪುಟ ರಿಫ್ರೆಶ್ ಮಾಡಿ.' }, 401);
+        if (!found) return json({ error: 'Session ಸಿಗಲಿಲ್ಲ. Page refresh ಮಾಡಿ.' }, 401);
         const { session, drill } = found;
 
         if (session.finished_at) return json({ finished: true });
 
         const candles = await drillCandles(env, drill);
-        if (!candles) return json({ error: 'ದತ್ತಾಂಶ ಸಿಗಲಿಲ್ಲ.' }, 500);
+        if (!candles) return json({ error: 'Data ಸಿಗಲಿಲ್ಲ.' }, 500);
 
         let trades = JSON.parse(session.trades);
         let cursor = session.cursor;
@@ -234,9 +234,9 @@ export default {
 
         if (path === '/api/session/order') {
           if (trades.length >= drill.max_trades)
-            return json({ error: 'ಈ ಡ್ರಿಲ್‌ನ ಆರ್ಡರ್ ಮಿತಿ ಮುಗಿದಿದೆ.' }, 400);
+            return json({ error: 'ಈ drill ನ order limit ಮುಗಿದಿದೆ.' }, 400);
           if (trades.some((t) => t.status === TRADE_STATUS.OPEN || t.status === TRADE_STATUS.PENDING))
-            return json({ error: 'ಈಗಾಗಲೇ ಒಂದು ಟ್ರೇಡ್ ಓಡುತ್ತಿದೆ. ಮೊದಲು ಅದನ್ನು ಮುಗಿಸಿ.' }, 400);
+            return json({ error: 'ಈಗಾಗಲೇ ಒಂದು trade open ಇದೆ. ಮೊದಲು ಅದನ್ನ ಮುಗಿಸಿ.' }, 400);
 
           const index = Math.min(drill.visible_bars + cursor, candles.length) - 1;
           const lastClose = candles[index].c;
@@ -307,7 +307,7 @@ export default {
       const resMatch = path.match(/^\/drill\/(\d+)\/result$/);
       if (resMatch) {
         const drill = await env.DB.prepare('SELECT * FROM drills WHERE id = ?').bind(resMatch[1]).first();
-        if (!drill) return html(messagePage('ಸಿಗಲಿಲ್ಲ', 'ಈ ಡ್ರಿಲ್ ಇಲ್ಲ.', { kind: 'bad' }), 404);
+        if (!drill) return html(messagePage('ಸಿಗಲಿಲ್ಲ', 'ಈ drill ಇಲ್ಲ.', { kind: 'bad' }), 404);
 
         const token = cookie(request, 'qci_lab_session');
         const session = token
@@ -316,7 +316,7 @@ export default {
               .first()
           : null;
         if (!session || !session.finished_at)
-          return html(messagePage('ಇನ್ನೂ ಮುಗಿದಿಲ್ಲ', 'ಈ ಡ್ರಿಲ್‌ನ ಸೆಷನ್ ಇನ್ನೂ ಮುಗಿದಿಲ್ಲ.'));
+          return html(messagePage('ಇನ್ನೂ ಮುಗಿದಿಲ್ಲ', 'ಈ drill ನ session ಇನ್ನೂ ಮುಗಿದಿಲ್ಲ.'));
 
         const rankRow = await env.DB.prepare(
           `SELECT COUNT(*) AS total,
@@ -344,11 +344,11 @@ export default {
         const drill = await env.DB.prepare(`SELECT * FROM drills WHERE id = ? AND status = 'live'`)
           .bind(startMatch[1])
           .first();
-        if (!drill) return html(messagePage('ಸಿಗಲಿಲ್ಲ', 'ಈ ಡ್ರಿಲ್ ಲಭ್ಯವಿಲ್ಲ.', { kind: 'bad' }), 404);
+        if (!drill) return html(messagePage('ಸಿಗಲಿಲ್ಲ', 'ಈ drill ಲಭ್ಯ ಇಲ್ಲ.', { kind: 'bad' }), 404);
 
         const { out } = await readForm(request);
         const phone = normalisePhone(out.phone);
-        if (!phone) return html(startPage(drill, 'ಸರಿಯಾದ 10 ಅಂಕಿಯ ನಂಬರ್ ಹಾಕಿ.'), 400);
+        if (!phone) return html(startPage(drill, 'ಸರಿಯಾದ 10 digit number ಹಾಕಿ.'), 400);
         if (!out.name) return html(startPage(drill, 'ಹೆಸರು ಹಾಕಿ.'), 400);
 
         await env.DB.prepare(
@@ -383,7 +383,7 @@ export default {
         const drill = await env.DB.prepare(`SELECT * FROM drills WHERE id = ? AND status = 'live'`)
           .bind(drillMatch[1])
           .first();
-        if (!drill) return html(messagePage('ಸಿಗಲಿಲ್ಲ', 'ಈ ಡ್ರಿಲ್ ಲಭ್ಯವಿಲ್ಲ.', { kind: 'bad' }), 404);
+        if (!drill) return html(messagePage('ಸಿಗಲಿಲ್ಲ', 'ಈ drill ಲಭ್ಯ ಇಲ್ಲ.', { kind: 'bad' }), 404);
 
         const token = cookie(request, 'qci_lab_session');
         const session = token
@@ -419,10 +419,10 @@ export default {
         const raw = url.searchParams.get('phone');
         if (!raw) return html(mePage({}));
         const phone = normalisePhone(raw);
-        if (!phone) return html(mePage({ phone: raw, error: 'ಸರಿಯಾದ 10 ಅಂಕಿಯ ನಂಬರ್ ಹಾಕಿ.' }));
+        if (!phone) return html(mePage({ phone: raw, error: 'ಸರಿಯಾದ 10 digit number ಹಾಕಿ.' }));
 
         const student = await env.DB.prepare('SELECT * FROM students WHERE phone = ?').bind(phone).first();
-        if (!student) return html(mePage({ phone, error: 'ಈ ನಂಬರ್‌ನಿಂದ ಇನ್ನೂ ಯಾವುದೇ ಸೆಷನ್ ಇಲ್ಲ.' }));
+        if (!student) return html(mePage({ phone, error: 'ಈ number ನಿಂದ ಇನ್ನೂ ಯಾವುದೇ session ಇಲ್ಲ.' }));
 
         const { results: rows } = await env.DB.prepare(
           `SELECT s.*, d.title AS title, d.atr AS atr, d.bias AS bias, d.max_trades AS max_trades
@@ -494,11 +494,11 @@ export default {
         return html(homePage(byLevel, done, unlocked));
       }
 
-      return html(messagePage('ಸಿಗಲಿಲ್ಲ', 'ಈ ಪುಟ ಇಲ್ಲ.', { kind: 'bad' }), 404);
+      return html(messagePage('ಸಿಗಲಿಲ್ಲ', 'ಈ page ಇಲ್ಲ.', { kind: 'bad' }), 404);
     } catch (err) {
       console.error(err);
-      if (path.startsWith('/api/')) return json({ error: 'ಸರ್ವರ್ ದೋಷ.' }, 500);
-      return html(messagePage('ತೊಂದರೆ ಆಯ್ತು', 'ಸರ್ವರ್ ದೋಷ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.', { kind: 'bad' }), 500);
+      if (path.startsWith('/api/')) return json({ error: 'Server error.' }, 500);
+      return html(messagePage('ತೊಂದರೆ ಆಯ್ತು', 'Server error. ಮತ್ತೆ try ಮಾಡಿ.', { kind: 'bad' }), 500);
     }
   },
 };
@@ -681,7 +681,7 @@ async function adminRoutes(request, env, path, method, url) {
       )
         .bind(
           dataset.id,
-          `${STRUCTURE_KN[out.structure] || 'ಡ್ರಿಲ್'} — bar ${start}`,
+          `${STRUCTURE_KN[out.structure] || 'Drill'} — bar ${start}`,
           STRUCTURE_LESSON[out.structure] || null,
           1,
           0,

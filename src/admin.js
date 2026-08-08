@@ -84,11 +84,11 @@ export function adminDrillForm(datasets, drill, error, preview) {
          </select></div>
 
        <div class="field"><label for="title">Title (Kannada)</label>
-         <input type="text" id="title" name="title" required value="${v('title')}" placeholder="ಪ್ರವೃತ್ತಿಯ ದಿಕ್ಕಿನಲ್ಲಿ ಮಾತ್ರ"></div>
+         <input type="text" id="title" name="title" required value="${v('title')}" placeholder="Trend ದಿಕ್ಕಿನಲ್ಲಿ ಮಾತ್ರ"></div>
 
        <div class="field"><label for="objective">The one lesson this drill teaches</label>
          <input type="text" id="objective" name="objective" value="${v('objective')}"
-           placeholder="ಪ್ರವೃತ್ತಿಗೆ ವಿರುದ್ಧವಾಗಿ ಟ್ರೇಡ್ ಮಾಡಬೇಡಿ"></div>
+           placeholder="Trend ಗೆ ವಿರುದ್ಧ trade ಮಾಡಬೇಡಿ"></div>
 
        <div class="prices">
          <div class="field"><label for="level">Level</label>

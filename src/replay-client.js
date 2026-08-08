@@ -45,7 +45,7 @@ export const CLIENT_JS = String.raw`
       return j;
     }).catch(function () {
       state.busy = false;
-      say('ಸಂಪರ್ಕ ತೊಂದರೆ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.', 'bad');
+      say('Connection problem. ಮತ್ತೆ try ಮಾಡಿ.', 'bad');
       return { error: true };
     });
   }
@@ -104,8 +104,8 @@ export const CLIENT_JS = String.raw`
       parts.forEach(function (el) { el.hidden = true; });
       elRNow.textContent = '—'; elRNow.className = 'now';
       elRFoot.textContent = [e, s, t].every(isFinite)
-        ? (side_ === 'BUY' ? 'Buy ಗೆ SL ಕೆಳಗೆ, TP ಮೇಲೆ ಇರಬೇಕು.' : 'Sell ಗೆ SL ಮೇಲೆ, TP ಕೆಳಗೆ ಇರಬೇಕು.')
-        : 'ನಿಮ್ಮ ಸ್ಟಾಪ್ ಎಂದರೆ 1R. ಎಲ್ಲವನ್ನೂ ಅದರ ಪಟ್ಟುಗಳಲ್ಲಿ ಅಳೆಯಿರಿ.';
+        ? (side_ === 'BUY' ? 'BUY ಗೆ SL ಕೆಳಗೆ, TP ಮೇಲೆ ಇರಬೇಕು.' : 'SELL ಗೆ SL ಮೇಲೆ, TP ಕೆಳಗೆ ಇರಬೇಕು.')
+        : 'ನಿಮ್ಮ Stop Loss ಅಂದ್ರೆ 1R. ಎಲ್ಲಾನೂ ಅದರ ಪಟ್ಟುಗಳಲ್ಲಿ ಅಳೆಯಿರಿ.';
       return;
     }
 
@@ -132,23 +132,23 @@ export const CLIENT_JS = String.raw`
     if (nowR != null) {
       elRNow.textContent = (nowR > 0 ? '+' : '') + nowR.toFixed(2) + 'R';
       elRNow.className = 'now ' + (nowR > 0 ? 'pos' : nowR < 0 ? 'neg' : '');
-      elRFoot.textContent = 'ಈಗ ನೀವು ' + (nowR >= 0 ? 'ಲಾಭದಲ್ಲಿ' : 'ನಷ್ಟದಲ್ಲಿ') + ' ಇದ್ದೀರಿ. ಗುರಿ +' +
-        rrPlan.toFixed(1) + 'R, ಸ್ಟಾಪ್ −1R.';
+      elRFoot.textContent = 'ಈಗ ನೀವು ' + (nowR >= 0 ? 'profit ನಲ್ಲಿ' : 'loss ನಲ್ಲಿ') + ' ಇದ್ದೀರಿ. Target +' +
+        rrPlan.toFixed(1) + 'R, Stop −1R.';
     } else {
       elRNow.textContent = '1 : ' + rrPlan.toFixed(2);
       elRNow.className = 'now ' + (rrPlan > 8 ? 'neg' : rrPlan >= 2 ? 'pos' : rrPlan >= 1 ? 'warn' : 'neg');
       elRFoot.textContent = rrPlan > 8
-        ? 'ಸ್ಟಾಪ್ ತುಂಬಾ ಹತ್ತಿರ. ಇಷ್ಟು ಬಿಗಿಯಾದ ಸ್ಟಾಪ್ ಸಾಮಾನ್ಯವಾಗಿ ಮೊದಲೇ ಹಿಟ್ ಆಗುತ್ತೆ.'
-        : rrPlan >= 2 ? 'ಒಳ್ಳೆಯ ಅನುಪಾತ. ಅರ್ಧ ಟ್ರೇಡ್ ತಪ್ಪಾದರೂ ಲಾಭ ಉಳಿಯುತ್ತೆ.'
-        : rrPlan >= 1 ? 'ಸಾಧಾರಣ. ಗೆಲುವಿನ ಪ್ರಮಾಣ ಹೆಚ್ಚಿರಬೇಕಾಗುತ್ತೆ.'
-        : 'ಅಪಾಯ ಲಾಭಕ್ಕಿಂತ ಹೆಚ್ಚು. ಗುರಿ ದೂರ ಇಡಿ ಅಥವಾ ಸ್ಟಾಪ್ ಹತ್ತಿರ ತನ್ನಿ.';
+        ? 'Stop ತುಂಬಾ ಹತ್ತಿರ. ಇಷ್ಟು ಬಿಗಿ SL ಸಾಮಾನ್ಯವಾಗಿ ಮೊದಲೇ hit ಆಗುತ್ತೆ.'
+        : rrPlan >= 2 ? 'ಒಳ್ಳೆ ratio. ಅರ್ಧ trades ತಪ್ಪಾದ್ರೂ profit ಉಳಿಯುತ್ತೆ.'
+        : rrPlan >= 1 ? 'ಸಾಧಾರಣ. Win rate ಹೆಚ್ಚಿರಬೇಕಾಗುತ್ತೆ.'
+        : 'Risk profit ಗಿಂತ ಹೆಚ್ಚು. Target ದೂರ ಇಡಿ ಅಥವಾ Stop ಹತ್ತಿರ ತನ್ನಿ.';
     }
   }
 
   function renderTrades() {
     if (!state.trades.length) { elTrades.innerHTML = ''; return; }
-    var names = { TP: 'ಟಾರ್ಗೆಟ್ ಹಿಟ್', SL: 'ಸ್ಟಾಪ್ ಹಿಟ್', OPEN: 'ಓಪನ್', PENDING: 'ಕಾಯುತ್ತಿದೆ',
-                  CLOSED: 'ಮುಚ್ಚಿದೆ', EXPIRED: 'ಅವಧಿ ಮುಗಿಯಿತು', CANCELLED: 'ಫಿಲ್ ಆಗಲಿಲ್ಲ' };
+    var names = { TP: 'Target hit', SL: 'Stop hit', OPEN: 'Open', PENDING: 'Pending',
+                  CLOSED: 'Closed', EXPIRED: 'Expired', CANCELLED: 'Fill ಆಗಲಿಲ್ಲ' };
     elTrades.innerHTML = state.trades.map(function (t, i) {
       var r = t.realisedR;
       var cls = r > 0 ? 'pos' : r < 0 ? 'neg' : '';
@@ -173,7 +173,7 @@ export const CLIENT_JS = String.raw`
       state.trades.some(function (t) { return t.status === 'OPEN' || t.status === 'PENDING'; });
     bNext.disabled = state.done || state.busy;
     bPlay.disabled = state.done || state.busy;
-    elMeta.textContent = state.remaining != null ? state.remaining + ' ಕ್ಯಾಂಡಲ್ ಬಾಕಿ' : '';
+    elMeta.textContent = state.remaining != null ? state.remaining + ' candles ಬಾಕಿ' : '';
   }
 
   function apply(j) {
@@ -186,7 +186,7 @@ export const CLIENT_JS = String.raw`
     if (j.trades) state.trades = j.trades;
     if (j.left != null) state.left = j.left;
     if (j.remaining != null) state.remaining = j.remaining;
-    if (j.finished) { state.done = true; stopPlay(); say('ಸೆಷನ್ ಮುಗಿಯಿತು. ಫಲಿತಾಂಶಕ್ಕೆ ಕರೆದೊಯ್ಯುತ್ತಿದ್ದೇವೆ…'); location.href = '/drill/' + D.id + '/result'; }
+    if (j.finished) { state.done = true; stopPlay(); say('Session ಮುಗೀತು. Report ಗೆ ಕರೆದೊಯ್ತಿದ್ದೀವಿ…'); location.href = '/drill/' + D.id + '/result'; }
     sync();
   }
 
@@ -196,13 +196,13 @@ export const CLIENT_JS = String.raw`
   }
 
   function stopPlay() {
-    if (playing) { clearInterval(playing); playing = null; bPlay.textContent = '▶ ಆಟೋ'; }
+    if (playing) { clearInterval(playing); playing = null; bPlay.textContent = '▶ Auto'; }
   }
 
   bNext.addEventListener('click', function () { stopPlay(); next(); });
   bPlay.addEventListener('click', function () {
     if (playing) return stopPlay();
-    bPlay.textContent = '❚❚ ನಿಲ್ಲಿಸಿ';
+    bPlay.textContent = '❚❚ Stop';
     playing = setInterval(function () { if (!state.busy) next(); }, 900);
   });
 
@@ -216,7 +216,7 @@ export const CLIENT_JS = String.raw`
       note: elNote.value
     }).then(function (j) {
       if (j.error) return;
-      say('ಆರ್ಡರ್ ಇಡಲಾಗಿದೆ.', 'good');
+      say('Order ಇಡಲಾಗಿದೆ.', 'good');
       elNote.value = '';
       apply(j);
     });
@@ -224,11 +224,11 @@ export const CLIENT_JS = String.raw`
 
   bClose.addEventListener('click', function () {
     stopPlay();
-    post('/api/session/close', {}).then(function (j) { if (!j.error) { say('ಟ್ರೇಡ್ ಮುಚ್ಚಲಾಗಿದೆ.'); apply(j); } });
+    post('/api/session/close', {}).then(function (j) { if (!j.error) { say('Trade close ಆಯ್ತು.'); apply(j); } });
   });
 
   bFinish.addEventListener('click', function () {
-    if (!confirm('ಸೆಷನ್ ಮುಗಿಸಬೇಕಾ? ಮತ್ತೆ ಶುರು ಮಾಡಲು ಆಗಲ್ಲ.')) return;
+    if (!confirm('Session ಮುಗಿಸಬೇಕಾ? ಮತ್ತೆ start ಮಾಡೋಕೆ ಆಗಲ್ಲ.')) return;
     stopPlay();
     post('/api/session/finish', {}).then(function (j) { if (!j.error) apply(j); });
   });
@@ -249,7 +249,7 @@ export const CLIENT_JS = String.raw`
   post('/api/session/state', {}).then(function (j) {
     if (j.error) return;
     apply(j);
-    if (!state.candles.length) return say('ದತ್ತಾಂಶ ಬರಲಿಲ್ಲ. ಪುಟ ರಿಫ್ರೆಶ್ ಮಾಡಿ.', 'bad');
+    if (!state.candles.length) return say('Data ಬರಲಿಲ್ಲ. Page refresh ಮಾಡಿ.', 'bad');
     if (!elEntry.value && lastClose != null) {
       var step = Math.max(Math.abs(lastClose) * 0.0015, Math.pow(10, -D.decimals) * 10);
       elEntry.value = lastClose.toFixed(D.decimals);

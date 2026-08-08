@@ -190,14 +190,14 @@ export function drillScore(trades, stats, drill) {
 /** Reject an order the moment it is placed, before it can pollute a session. */
 export function validateOrder({ side, entry, sl, tp }, lastClose, atr) {
   const nums = [entry, sl, tp].map(Number);
-  if (!nums.every(Number.isFinite)) return 'Entry, SL ಮತ್ತು TP — ಮೂರೂ ಬೆಲೆ ಬೇಕು.';
+  if (!nums.every(Number.isFinite)) return 'Entry, SL ಮತ್ತು TP — ಮೂರೂ price ಬೇಕು.';
   const [e, s, t] = nums;
-  if (nums.some((n) => n <= 0)) return 'ಬೆಲೆ ಸೊನ್ನೆಗಿಂತ ಹೆಚ್ಚಿರಬೇಕು.';
-  if (side === SIDE.BUY && !(s < e && e < t)) return 'Buy: SL ಕೆಳಗೆ, TP ಮೇಲೆ ಇರಬೇಕು.';
-  if (side === SIDE.SELL && !(t < e && e < s)) return 'Sell: SL ಮೇಲೆ, TP ಕೆಳಗೆ ಇರಬೇಕು.';
-  if (![SIDE.BUY, SIDE.SELL].includes(side)) return 'Buy ಅಥವಾ Sell ಆಯ್ಕೆ ಮಾಡಿ.';
-  if (atr > 0 && Math.abs(e - s) < atr * 0.25) return 'SL ತುಂಬಾ ಹತ್ತಿರ ಇದೆ. ಕನಿಷ್ಠ ಕಾಲು ATR ದೂರ ಇಡಿ.';
-  if (atr > 0 && Math.abs(e - lastClose) > atr * 12) return 'Entry ಮಾರುಕಟ್ಟೆಯಿಂದ ತುಂಬಾ ದೂರ ಇದೆ.';
+  if (nums.some((n) => n <= 0)) return 'Price zero ಗಿಂತ ಹೆಚ್ಚಿರಬೇಕು.';
+  if (side === SIDE.BUY && !(s < e && e < t)) return 'BUY ಗೆ: SL ಕೆಳಗೆ, TP ಮೇಲೆ ಇರಬೇಕು.';
+  if (side === SIDE.SELL && !(t < e && e < s)) return 'SELL ಗೆ: SL ಮೇಲೆ, TP ಕೆಳಗೆ ಇರಬೇಕು.';
+  if (![SIDE.BUY, SIDE.SELL].includes(side)) return 'BUY ಅಥವಾ SELL ಆಯ್ಕೆ ಮಾಡಿ.';
+  if (atr > 0 && Math.abs(e - s) < atr * 0.25) return 'SL ತುಂಬಾ ಹತ್ತಿರ ಇದೆ. ಕನಿಷ್ಠ 0.25 ATR ದೂರ ಇಡಿ.';
+  if (atr > 0 && Math.abs(e - lastClose) > atr * 12) return 'Entry market price ನಿಂದ ತುಂಬಾ ದೂರ ಇದೆ.';
   return null;
 }
 

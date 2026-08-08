@@ -24,18 +24,18 @@ export const STRUCTURE = {
 };
 
 export const STRUCTURE_KN = {
-  TREND: 'ಸ್ಪಷ್ಟ ಪ್ರವೃತ್ತಿ',
-  RANGE: 'ಚಲನೆ ಇಲ್ಲದ ವಲಯ',
-  SWEEP: 'Liquidity sweep ನಂತರ ತಿರುವು',
-  BREAKOUT: 'ಸಂಕುಚನದ ನಂತರ ವಿಸ್ತರಣೆ',
+  TREND: 'ಸ್ಪಷ್ಟ Trend',
+  RANGE: 'Range — ಚಲನೆ ಇಲ್ಲದ market',
+  SWEEP: 'Liquidity Sweep ನಂತರ Reversal',
+  BREAKOUT: 'Compression ನಂತರ Expansion',
 };
 
 /** What each structure is good for teaching, shown to the mentor. */
 export const STRUCTURE_LESSON = {
-  TREND: 'ಪ್ರವೃತ್ತಿಯ ದಿಕ್ಕಿನಲ್ಲಿ ಮಾತ್ರ ಟ್ರೇಡ್ ಮಾಡುವುದು',
-  RANGE: 'ಸ್ಪಷ್ಟತೆ ಇಲ್ಲದಾಗ ಟ್ರೇಡ್ ಮಾಡದೆ ಇರುವುದು',
-  SWEEP: 'ಸ್ಟಾಪ್ ಅನ್ನು wick ನ ಆಚೆ ಇಡುವುದು',
-  BREAKOUT: 'ಸಂಕುಚನವನ್ನು ಗುರುತಿಸಿ ವಿಸ್ತರಣೆಗೆ ಕಾಯುವುದು',
+  TREND: 'Trend ದಿಕ್ಕಿನಲ್ಲಿ ಮಾತ್ರ trade ಮಾಡೋದು',
+  RANGE: 'Clarity ಇಲ್ಲದಾಗ trade ಮಾಡದೆ ಇರೋದು',
+  SWEEP: 'Stop Loss ಅನ್ನು wick ನ ಆಚೆ ಇಡೋದು',
+  BREAKOUT: 'Compression ಗುರುತಿಸಿ expansion ಗೆ ಕಾಯೋದು',
 };
 
 const sum = (a) => a.reduce((x, y) => x + y, 0);
@@ -87,7 +87,7 @@ function detectTrend(visible, forward, unit) {
     structure: STRUCTURE.TREND,
     direction: up ? 'UP' : 'DOWN',
     quality,
-    detail: `${moveATR.toFixed(1)} ATR ${up ? 'ಮೇಲಕ್ಕೆ' : 'ಕೆಳಕ್ಕೆ'}, ದಕ್ಷತೆ ${(eff * 100).toFixed(0)}%`,
+    detail: `${moveATR.toFixed(1)} ATR ${up ? 'ಮೇಲಕ್ಕೆ' : 'ಕೆಳಕ್ಕೆ'} · Efficiency ${(eff * 100).toFixed(0)}%`,
   };
 }
 
@@ -104,7 +104,7 @@ function detectRange(visible, forward, unit) {
     structure: STRUCTURE.RANGE,
     direction: 'NO_TRADE',
     quality,
-    detail: `${span.toFixed(1)} ATR ವಲಯ, ನಿವ್ವಳ ಚಲನೆ ${net.toFixed(1)} ATR`,
+    detail: `${span.toFixed(1)} ATR range · Net move ಬರೀ ${net.toFixed(1)} ATR`,
   };
 }
 
@@ -135,9 +135,9 @@ function detectSweep(visible, forward, unit) {
       structure: STRUCTURE.SWEEP,
       direction: up ? 'UP' : 'DOWN',
       quality,
-      detail: `Bar ${i + 1} ${up ? 'ಸಪೋರ್ಟ್ ಕೆಳಗೆ' : 'ರೆಸಿಸ್ಟೆನ್ಸ್ ಮೇಲೆ'} ${depth.toFixed(
+      detail: `Bar ${i + 1} ರಲ್ಲಿ ${up ? 'support ಕೆಳಗೆ' : 'resistance ಮೇಲೆ'} ${depth.toFixed(
         1
-      )} ATR ಚುಚ್ಚಿ ಮರಳಿತು, ನಂತರ ${travel.toFixed(1)} ATR`,
+      )} ATR ಚುಚ್ಚಿ ವಾಪಸ್ ಬಂತು · ಆಮೇಲೆ ${travel.toFixed(1)} ATR ಚಲನೆ`,
     };
   }
   return null;
@@ -160,7 +160,7 @@ function detectBreakout(visible, forward, unit) {
     structure: STRUCTURE.BREAKOUT,
     direction: net > 0 ? 'UP' : 'DOWN',
     quality,
-    detail: `${coilSpan.toFixed(1)} ATR ಸಂಕುಚನ, ನಂತರ ${moveATR.toFixed(1)} ATR ವಿಸ್ತರಣೆ`,
+    detail: `${coilSpan.toFixed(1)} ATR compression · ಆಮೇಲೆ ${moveATR.toFixed(1)} ATR expansion`,
   };
 }
 
@@ -257,11 +257,11 @@ export function sessionOf(hour) {
 }
 
 export const SESSION_KN = {
-  ASIA: 'ಏಷ್ಯಾ',
-  LONDON: 'ಲಂಡನ್',
-  LONDON_NY: 'ಲಂಡನ್–ನ್ಯೂಯಾರ್ಕ್ ಒವರ್‌ಲ್ಯಾಪ್',
-  NY: 'ನ್ಯೂಯಾರ್ಕ್',
-  LATE: 'ತಡರಾತ್ರಿ',
+  ASIA: 'Asia',
+  LONDON: 'London',
+  LONDON_NY: 'London–NY Overlap',
+  NY: 'New York',
+  LATE: 'ತಡರಾತ್ರಿ (Late)',
 };
 
 /** Pull an hour out of the timestamp label the export gave us, if there is one. */

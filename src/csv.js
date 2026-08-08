@@ -52,7 +52,7 @@ export function parseOHLC(text, { maxBars = 60000 } = {}) {
     .split(/\r?\n/)
     .map((l) => l.trim())
     .filter(Boolean);
-  if (!lines.length) return { candles: [], skipped: 0, warning: 'ಫೈಲ್ ಖಾಲಿ ಇದೆ.' };
+  if (!lines.length) return { candles: [], skipped: 0, warning: 'File ಖಾಲಿ ಇದೆ.' };
 
   const delim = pickDelimiter(lines[0]);
   const rows = lines.map((l) => l.split(delim));
@@ -65,7 +65,7 @@ export function parseOHLC(text, { maxBars = 60000 } = {}) {
     // last four of the first five numbers are O/H/L/C, which is how every
     // terminal export is laid out.
     const sample = rows.find((r) => r.filter((cell) => Number.isFinite(toNumber(cell))).length >= 4);
-    if (!sample) return { candles: [], skipped: 0, warning: 'OHLC ಕಾಲಂಗಳು ಸಿಗಲಿಲ್ಲ.' };
+    if (!sample) return { candles: [], skipped: 0, warning: 'OHLC columns ಸಿಗಲಿಲ್ಲ.' };
     const numeric = [];
     sample.forEach((cell, i) => {
       if (Number.isFinite(toNumber(cell))) numeric.push(i);
@@ -102,18 +102,18 @@ export function parseOHLC(text, { maxBars = 60000 } = {}) {
   }
 
   let warning = null;
-  if (!candles.length) warning = 'ಒಂದೂ ಸರಿಯಾದ candle ಸಿಗಲಿಲ್ಲ. ಕಾಲಂಗಳನ್ನು ಪರೀಕ್ಷಿಸಿ.';
+  if (!candles.length) warning = 'ಒಂದೂ ಸರಿಯಾದ candle ಸಿಗಲಿಲ್ಲ. Columns ಪರೀಕ್ಷಿಸಿ.';
   else if (skipped > candles.length * 0.1)
-    warning = `${skipped} ಸಾಲುಗಳು ಬಿಟ್ಟುಹೋದವು — ಫೈಲ್ ಸರಿಯಾಗಿದೆಯಾ ನೋಡಿ.`;
+    warning = `${skipped} rows skip ಆದವು — file ಸರಿಯಾಗಿದೆಯಾ ನೋಡಿ.`;
 
   return { candles, skipped, warning };
 }
 
 /** Round-trip guard: reject a window that is flat or has gaps wide enough to be a data error. */
 export function inspectWindow(candles) {
-  if (candles.length < 10) return 'ಈ ಭಾಗದಲ್ಲಿ ಸಾಕಷ್ಟು candle ಇಲ್ಲ.';
+  if (candles.length < 10) return 'ಈ window ನಲ್ಲಿ ಸಾಕಷ್ಟು candle ಇಲ್ಲ.';
   const range = Math.max(...candles.map((c) => c.h)) - Math.min(...candles.map((c) => c.l));
-  if (!(range > 0)) return 'ಈ ಭಾಗದಲ್ಲಿ ಬೆಲೆ ಚಲಿಸಿಯೇ ಇಲ್ಲ.';
+  if (!(range > 0)) return 'ಈ window ನಲ್ಲಿ price ಚಲಿಸಿಯೇ ಇಲ್ಲ.';
   return null;
 }
 
