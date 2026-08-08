@@ -29,6 +29,13 @@ export const CLIENT_JS = String.raw`
     return c ? c.value : 'BUY';
   }
 
+  /** The order currently working, if any. Both the chart and the ruler read it. */
+  function live() {
+    return state.trades.filter(function (t) {
+      return t.status === 'OPEN' || t.status === 'PENDING';
+    })[0];
+  }
+
   function say(text, kind) {
     elMsg.innerHTML = text ? '<div class="notice ' + (kind || '') + '">' + text + '</div>' : '';
   }
